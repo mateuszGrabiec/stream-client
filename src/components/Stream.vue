@@ -37,7 +37,8 @@ export default class Stream extends Vue {
       ],
     };
     this.peerConnections=[];
-    this.socket = io("http://localhost:3000");
+    //this.socket = io("http://localhost:3000");
+    this.socket = io("https://stream.mgrabiec.pl/");
     //socket listeners
 
     this.socket.on("watcher", (id: number) => {

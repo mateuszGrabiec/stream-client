@@ -8,14 +8,8 @@
 </template>
 
 <script>
-// import Stream from '../components/Stream.vue'
-// import Watcher from '../components/Watcher.vue'
 
 export default {
   name: "ShareUI",
-  // components: {
-  //   Stream,
-  //   Watcher
-  // }
 };
 </script>

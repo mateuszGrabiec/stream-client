@@ -28,8 +28,8 @@ export default class Watcher extends Vue {
       ],
     };
    this.peerConnection = new RTCPeerConnection(config);
-    //this.socket = io("https://stream.mgrabiec.pl/");
-    this.socket = io("http://localhost:3000");
+    this.socket = io("https://stream.mgrabiec.pl/");
+    //this.socket = io("http://localhost:3000");
     //socket listeners
     this.socket.on("offer", (id: string, description: any) => {
        
