@@ -1,10 +1,9 @@
 <template>
   <div class="stream">
     <h1>{{msg}}</h1>
+    <h3 av-if="socket.id">{{socket.id}}</h3>
     <button id="start" @click="start()">Start</button>
-    <button id="stop" @click="stop()">Stop</button>
-    <button id="share" @click="share()">Share</button>
-    <button id="share" @click="show()">Show connection</button>
+    <button id="stop" @click="stop()">Stop</button><br>
     <video
       av-if="video"
       id="myVideoEl"
@@ -102,19 +101,25 @@ export default class Stream extends Vue {
   }
 
   stop() {
+    this.socket.emit("end",this.socket.id)
     const tracks = this.video.getTracks();
     tracks.forEach((track: any) => track.stop());
     this.video = null;
   }
-  share() {
-    this.socket.emit("broadcaster");
-  }
 
-  show(){
-    console.log(this.peerConnections)
+  created(){
+    window.onunload = window.onbeforeunload = () => {
+      this.socket.close();
+    };
   }
 }
 </script>
 
 <style lang="scss" scoped>
+video {
+  border: 3px solid black;
+  width: 80vw;
+  height: 60vw;
+  padding: 3px;
+}
 </style>
