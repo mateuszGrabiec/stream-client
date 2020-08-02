@@ -1,9 +1,12 @@
 <template>
   <div class="stream">
     <h1>{{msg}}</h1>
+    <h2>Your stream id:</h2>
     <h3 av-if="socket.id">{{socket.id}}</h3>
+    <div class="button-wraapper">
     <button id="start" @click="start()">Start</button>
-    <button id="stop" @click="stop()">Stop</button><br>
+    <button id="stop" @click="stop()">Stop</button>
+    </div>
     <video
       av-if="video"
       id="myVideoEl"
@@ -27,7 +30,7 @@ export default class Stream extends Vue {
 
   constructor() {
     super();
-    this.msg = "Hello";
+    this.msg = "Stream component";
     const config = {
       iceServers: [
         {
@@ -36,10 +39,9 @@ export default class Stream extends Vue {
       ],
     };
     this.peerConnections=[];
-    //this.socket = io("http://localhost:3000");
-    this.socket = io("https://stream.mgrabiec.pl/");
+    this.socket = io("https://presentation.mgrabiec.usermd.net/");
     //socket listeners
-
+    
     this.socket.on("watcher", (id: number) => {
       const peerConnection = new RTCPeerConnection(config);
       this.peerConnections[id] = peerConnection;
@@ -117,9 +119,44 @@ export default class Stream extends Vue {
 
 <style lang="scss" scoped>
 video {
-  border: 3px solid black;
   width: 80vw;
   height: 60vw;
   padding: 3px;
+}
+.stream{
+  text-align: center;
+}
+.button-wraapper button{
+  margin: 0px 5px;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 5px 5px 5px 5px;
+  height: 50px;
+  width: 70px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #fff;
+}
+.button-wraapper button:hover{
+  font-weight: bold;
+  color: #fff;
+}
+
+#start{
+  border: 2px solid #4CAF50;
+}
+
+#stop{
+  border: 2px solid #fab;
+}
+
+#start:hover{
+  background-color: #4CAF50;
+}
+#stop:hover{
+  background-color: #fab;
+}
+button {
+  transition-duration: 0.4s;
 }
 </style>

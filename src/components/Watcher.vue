@@ -1,6 +1,8 @@
 <template>
-  <div class="hello">
+  <div class="watcher">
     <h1>{{ msg }}</h1>
+    <h2>Click id below to join strem</h2>
+    <p>If the list is empty is sign, that no one is streaming</p>
     <button @click="getSpeakers()">Show who's stream</button>
     <ul av-if="socketsWithStream" id="stream-list">
       <li v-for="item in socketsWithStream" :key="item" @click="connectToSocket(item)">{{ item }}</li>
@@ -9,8 +11,8 @@
       av-if="video"
       id="myVideoEl"
       ref="streamWindow"
+      controls
       :srcObject.prop="video"
-      autoplay="autoplay"
     ></video>
   </div>
 </template>
@@ -30,7 +32,7 @@ export default class Watcher extends Vue {
 
   constructor() {
     super();
-    this.msg = "Hello";
+    this.msg = "Watcher component";
     const config = {
       iceServers: [
         {
@@ -38,10 +40,9 @@ export default class Watcher extends Vue {
         },
       ],
     };
-    this.socketsWithStream = [];
 
-    this.socket = io("https://stream.mgrabiec.pl/");
-    //this.socket = io("http://localhost:3000");
+    this.socketsWithStream = [];
+    this.socket = io("https://presentation.mgrabiec.usermd.net/");
     //socket listeners
     this.peerConnection = new RTCPeerConnection(config);
     this.socket.on("offer", (id: string, description: any) => {
@@ -108,13 +109,13 @@ export default class Watcher extends Vue {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 video {
-  border: 3px solid black;
   width: 80vw;
   height: 60vw;
   padding: 3px;
+}
+.watcher{
+  text-align: center;
 }
 </style>
